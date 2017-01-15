@@ -1,0 +1,49 @@
+{
+  "name": "qnapcli",
+  "description": "Qnap command client",
+  "version": "0.1.0",
+  "homepage": "https://github.com/tommasomarchionni/qnapcli",
+  "author": {
+    "name": "Tommaso Marchionni",
+    "url": "https://github.com/tommasomarchionni",
+    "email": "tommaso.marchionni@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tommasomarchionni/qnapcli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tommasomarchionni/qnapcli/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tommasomarchionni/qnapcli/blob/master/LICENSE-MIT"
+    }
+  ],
+  "keywords": [
+    "cli",
+    "command line",
+    "qnap",
+    "beep"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "qnapcli": "./bin/qnapcli"
+  },
+  "main": "./bin/qnapcli",
+  "module": "./bin/qnapcli",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "dependencies": {
+    "async": "^2.1.4",
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "es6-promise": "^4.0.5",
+    "request": "^2.79.0",
+    "request-promise-native": "^1.0.3",
+    "xml2js": "^0.4.17",
+    "xml2js-es6-promise": "^1.1.1"
+  }
+}
