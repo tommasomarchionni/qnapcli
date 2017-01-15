@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-//TODO write in lcd
-//TODO reboot
-//TODO shutdown
-
 const Promise = this.Promise || require('es6-promise');
 const program = require('commander');
 const async = require('async');
@@ -16,55 +12,71 @@ const pjson = require('./../package.json');
  * Beep function
  * @param env
  */
-let beepFunction = env => {
-    if (typeof env.host === 'undefined') {
+let beepFunction = (env) => {
+
+    if (typeof env.parent.host === 'undefined') {
         utils.printError('Error: host option is required!');
         process.exit(1);
     }
 
-    if (typeof env.username === 'undefined') {
+    if (typeof env.parent.username === 'undefined') {
         utils.printError('Error: username option is required!');
         process.exit(1);
     }
 
-    if (typeof env.password === 'undefined') {
+    if (typeof env.parent.password === 'undefined') {
         utils.printError('Error: password option is required!');
         process.exit(1);
     }
 
-    qnaplib.getSid(env.protocol, env.host, env.port, env.username, env.password, env.timeout, env.strictssl)
-        .then(sid => {
-            async.timesSeries(env.count,
-                (n, next) => {
-                    setTimeout(() => {
-                        qnaplib.makeQnapBeep(env.protocol, env.host, env.port, sid, env.timeout, env.strictssl).then(() => {
-                            next(false);
-                        });
-                    }, env.interval);
-                }
-            )
-        })
-        .catch(err => {
-            utils.printError(err.message);
-            process.exit(1);
-        });
+    qnaplib.getSid(
+        env.parent.protocol,
+        env.parent.host,
+        env.parent.port,
+        env.parent.username,
+        env.parent.password,
+        env.parent.timeout,
+        env.parent.strictssl
+    ).then(sid => {
+        async.timesSeries(env.count,
+            (n, next) => {
+                setTimeout(() => {
+                    qnaplib.makeQnapBeep(
+                        env.parent.protocol,
+                        env.parent.host,
+                        env.parent.port,
+                        sid,
+                        env.parent.timeout,
+                        env.parent.strictssl
+                    ).then(() => {
+                        next();
+                    });
+                }, env.interval);
+            }
+        )
+    })
+    .catch(err => {
+        utils.printError(err.message);
+        process.exit(1);
+    });
 };
 
 program
-    .version(pjson.version);
+    .version(pjson.version)
+    .option('-k, --protocol <protocol>', 'the protocol to use, default is https', 'https')
+    .option('-h, --host <host>', 'the host to use, required')
+    .option('-P, --port <port>', 'the port to use, default is 443', 443)
+    .option('-u, --username <username>', 'the user to authenticate as, required')
+    .option('-p, --password <password>', 'the user\'s password, required')
+    .option('-s, --strictssl <strictssl>', 'if 1, requires SSL certificates be valid, default is 1', 1)
+    .option('-t, --timeout <timeout>', 'timeout in milliseconds for request, default is 5000', 5000);
+
 
 program
     .command('beep')
-    .option('-k, --protocol [protocol]', 'The protocol to use, default is http', 'http')
-    .option('-h, --host <host>', 'The host to use, required')
-    .option('-P, --port <port>', 'The port to use, default is 8080', '8080')
-    .option('-u, --username <username>', 'The user to authenticate as, required')
-    .option('-p, --password <password>', 'The user\'s password, required')
-    .option('-c, --count <count>', 'How many times you want beep? Default is 1', 1)
-    .option('-i, --interval <interval>', 'How many millisecond from one beep to another? Default is 1000', 1000)
-    .option('-s, --strictssl <strictssl>', 'If 1, requires SSL certificates be valid, default is true', 1)
-    .option('-t, --timeout <timeout>', 'Timeout in milliseconds for request, default is 5000', 5000)
-    .description('make qnap beep')
+    .option('-c, --count <count>', 'how many times you want beep? Default is 1', 1)
+    .option('-i, --interval <interval>', 'how much time in milliseconds from one beep to another? Default is 1000', 1000)
+    .description('allows the QNAP to beep')
     .action(beepFunction);
 
 program.parse(process.argv);
