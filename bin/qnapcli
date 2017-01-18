@@ -4,8 +4,8 @@
 const Promise = this.Promise || require('es6-promise');
 const program = require('commander');
 const async = require('async');
-const qnaplib = require('./../libs/qnaplib');
-const utils = require('./../libs/utils');
+const qnaplib = require('./../lib/qnaplib');
+const utils = require('./../lib/utils');
 const pjson = require('./../package.json');
 
 /**
@@ -48,9 +48,10 @@ let beepFunction = (env) => {
                         sid,
                         env.parent.timeout,
                         env.parent.strictssl
-                    ).then(() => {
+                    ).then((result) => {
+                        utils.printInfo(result);
                         next();
-                    });
+                    }).catch(err => utils.printError(err.message))
                 }, env.interval);
             }
         )
