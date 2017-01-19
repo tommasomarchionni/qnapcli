@@ -41,7 +41,7 @@ let beepFunction = (env) => {
         async.timesSeries(env.count,
             (n, next) => {
                 setTimeout(() => {
-                    qnaplib.makeQnapBeep(
+                    qnaplib.beep(
                         env.parent.protocol,
                         env.parent.host,
                         env.parent.port,
@@ -53,6 +53,58 @@ let beepFunction = (env) => {
                         next();
                     }).catch(err => utils.printError(err.message))
                 }, env.interval);
+            }
+        )
+    })
+    .catch(err => {
+        utils.printError(err.message);
+        process.exit(1);
+    });
+};
+
+/**
+ * Beep function
+ * @param env
+ */
+let restartFunction = (env) => {
+
+    if (typeof env.parent.host === 'undefined') {
+        utils.printError('Error: host option is required!');
+        process.exit(1);
+    }
+
+    if (typeof env.parent.username === 'undefined') {
+        utils.printError('Error: username option is required!');
+        process.exit(1);
+    }
+
+    if (typeof env.parent.password === 'undefined') {
+        utils.printError('Error: password option is required!');
+        process.exit(1);
+    }
+
+    qnaplib.getSid(
+        env.parent.protocol,
+        env.parent.host,
+        env.parent.port,
+        env.parent.username,
+        env.parent.password,
+        env.parent.timeout,
+        env.parent.strictssl
+    ).then(sid => {
+        async.timesSeries(1,
+            (n, next) => {
+                qnaplib.restart(
+                    env.parent.protocol,
+                    env.parent.host,
+                    env.parent.port,
+                    sid,
+                    env.parent.timeout,
+                    env.parent.strictssl
+                ).then((result) => {
+                    utils.printInfo(result);
+                    next();
+                }).catch(err => utils.printError(err.message))
             }
         )
     })
@@ -79,6 +131,11 @@ program
     .option('-i, --interval <interval>', 'how much time in milliseconds from one beep to another? Default is 1000', 1000)
     .description('allows the QNAP to beep')
     .action(beepFunction);
+
+program
+    .command('restart')
+    .description('restart QNAP')
+    .action(restartFunction);
 
 program.parse(process.argv);
 
