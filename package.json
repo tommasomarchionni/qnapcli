@@ -1,7 +1,7 @@
 {
   "name": "qnapcli",
   "description": "Qnap command client",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "https://github.com/tommasomarchionni/qnapcli",
   "author": {
     "name": "Tommaso Marchionni",
@@ -43,7 +43,6 @@
     "es6-promise": "^4.0.5",
     "request": "^2.79.0",
     "request-promise-native": "^1.0.3",
-    "validate-arguments": "0.0.8",
     "xml2js": "^0.4.17",
     "xml2js-es6-promise": "^1.1.1"
   },
