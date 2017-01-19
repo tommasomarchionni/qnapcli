@@ -7,3 +7,7 @@ node_js:
 addons:
     code_climate:
         repo_token: s5xOtAhnVwPI+0luPx3fx0eTCyB2NE+K039oF7Zk83GeiSYInHAeMN4J2dV0ktyxefLjKXnqnluCJmxhV0hgQ8mhsMuL79Xwyi83nXWKpWGFwUUDOd7YKO/otGapI2x2cbi6mKApTDmxtt+rjF8447XENm+fmtNhl/9iHcccXsweEglrJ2VCixBGEd52XvNzLJ94EwE728YaB32NmOFJyxOzw2eTBHPHA5ebT+C8LPd+/4gkUDIIvTPjC7km0CPewsBG1hF+OhUsPol3XHfPseSWSdDbBa6rnnSYA88q7+v+cg8Zyj0Fq9q9jAdVI4vjmFWVrhJLuN+UrZzs4/n7LecB1l8AFHLk0X2HfWkkacBbh3T5JyDPLTPxcR/izGfIMoAesphMC/OnRg9Zsa6rmdtU0WfliGhCCTP2M4rIfqzZNbGHPG5qALMgvMWOJjdG5JE/RQCjx/ddN5a1y5nZS1HATKp/y3nXmO8C+o9+VFj3ULUo1MxGK5X7nbVpfESYtZ4eDZ1XfemjUfxt9C/tFitfJDHKFNz37KNdA9mp1EW+l3t9nZdiyOeL/BPQViRRoKGx633LdPxZEEpvcuYywWBBGNrDuLurTCzoqYqVB3OcFpvftjfBxLvA54yJ/wTXn5YkLeqkMuH+5q3zleSoR8i0w8LEBCYp0pOvYT1IT34=
+
+after_success:
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < lcov.info
