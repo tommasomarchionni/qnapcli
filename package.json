@@ -1,7 +1,7 @@
 {
   "name": "qnapcli",
   "description": "Qnap command client",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/tommasomarchionni/qnapcli",
   "author": {
     "name": "Tommaso Marchionni",
@@ -34,7 +34,7 @@
   "main": "./bin/qnapcli",
   "module": "./bin/qnapcli",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.0"
   },
   "dependencies": {
     "async": "^2.1.4",
