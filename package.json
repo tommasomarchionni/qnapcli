@@ -1,7 +1,7 @@
 {
   "name": "qnapcli",
   "description": "Qnap command client",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://github.com/tommasomarchionni/qnapcli",
   "author": {
     "name": "Tommaso Marchionni",
