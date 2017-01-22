@@ -16,6 +16,8 @@ Install this CLI globally:
 
  - Allows the QNAP to beep.
  - Force QNAP to restart.
+ - Force QNAP to shutdown.
+ - Force QNAP to sleep.
 
 ## Usage
 
