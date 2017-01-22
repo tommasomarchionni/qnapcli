@@ -87,7 +87,7 @@ describe("qnaplib", function() {
             "use strict";
             let rp = require('request-promise-native');
             return qnaplib.restart('http', 'http://test', 80, 'sid', 5000, 1, rp).then(function fulfilled(result) {
-                assert.equal(result, 'Restarting Qnap...');
+                assert.equal(result, 'Starting reboot...');
             }, function rejected(error) {
                 throw new Error('Promise was rejected. Error: ' + error);
             });
