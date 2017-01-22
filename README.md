@@ -33,7 +33,11 @@ Install this CLI globally:
     --count            how many times you want beep? Default is 1
     --interval         how much time in milliseconds from one beep to another? Default is 1000
      
-    restart            force qnap to restart 
+    restart            force qnap to restart
+     
+    shutdown           force qnap to shutdown
+     
+    sleep              force qnap to sleep 
 
    **Global Options:**
 
